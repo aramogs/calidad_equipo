@@ -1,0 +1,63 @@
+<% include ./static/header %>
+<% include ./static/sidebar %>
+<% include ./static/navbar %>
+
+<div class="col-xl-12 jumbotron jumbotron-fluid animated bounceInDown">
+    <div class="container">
+        <img src="/img/TristoneLogo.png" class="rounded mx-auto d-block" alt="Tristone Flowtech">
+        <h1 class="display-4 text-center">Inventario Equipo de Calidad</h1>
+        <p class="lead text-center">Equipo ha sido creado satisfactoriamente</p>
+
+
+        <div class="card bg-light  ">
+            <div class=" card-header text-white bg-success text-center">EquipoCreado</div>
+            <div class="card-body">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <td>ID</td>
+                            <td><%= data.id%></td>
+                        </tr>
+                        <tr>
+                            <td>Tipo</td>
+                            <td><%= data.tipo%></td>
+                        </tr>
+                        <tr>
+                            <td>Plataforma</td>
+                            <td><%= data.plataforma%></td>
+                        </tr>
+
+                        <tr>
+                            <td>Descripcion</td>
+                            <td><%= data.descripcion%></td>
+                        </tr>
+
+                        <tr>
+                            <td>Periodo de verificacion (Meses)</td>
+                            <td><%= data.periodo%></td>
+                        </tr>
+
+                        <tr>
+                            <td>Ultima Verificacion</td>
+                            <td><%= data.fecha_verificacion%></td>
+                        </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, '/');
+
+    }
+
+    
+
+</script>
+<% include ./static/footer %>
+</div>
+</body>
+
+</html>

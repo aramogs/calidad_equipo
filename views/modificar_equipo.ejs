@@ -1,0 +1,276 @@
+<% include ./static/header %>
+<% include ./static/sidebar %>
+<% include ./static/navbar %>
+
+<div class="col-md-6 col-lg-10-2">
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="box-header with-border">
+                <br>
+            <h3 class="box-title">Modificar Equipo</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form action="/guardar_equipo" method="POST">
+            <div class="box-body">
+            
+                <!------->
+                <!-- Date format yyyy-m-d -->
+                <%
+                     var d = new Date();
+                     var mm = d.getMonth() + 1;
+                     var dd = d.getDate();
+                     var yy = d.getFullYear();
+                     var myDateString = yy + '-' + mm + '-' + dd; //(US)
+                     %>
+                <!------->
+
+                <%
+         
+               
+                let date = data8[0].fecha_verificacion
+                let formatted_date =  date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() 
+                let formatted_date2
+
+                let fecharyru = data8[0].fecha_ryr
+                if(fecharyru != null){
+                let date2 = data8[0].fecha_ryr
+                formatted_date2 =  date2.getFullYear() + "-" + (date2.getMonth() + 1) + "-" + date2.getDate()
+
+                }else{
+                    formatted_date2 ="";
+                }
+
+                %>
+
+
+                <div class="row">
+                        <input type="text" name="user" id="user" value="<%= data4%>" hidden >
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">ID Equipo: </label> <label id="msg"> </label>
+                        <input type="text" class="form-control" id="id" value="<%= data7%>" name="id"
+                            onkeyup="this.value = this.value.toUpperCase();" readonly>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Tipo</label>
+                        <select class="form-control" name="tipo" id="tipo" >
+                            <option value="" selected><%= data8[0].tipo%></option>
+                            <% for (var i = 0; i < data6.length; i++) { %>
+                            <option><%= data6[i].tipo%></option>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+                <!------->
+                <div class="row">
+
+
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Periodo de verificacion (Meses)</label>
+                        <select class="form-control" name="periodo" id="periodo" >
+                            <option value="" selected><%= data8[0].equipo_periodo%></option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+
+
+                        </select>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <label for="inlineFormInputGroup">Ultima Verificacion</label>
+                        <div class="input-group ">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><span class="fas fa-calendar"></span></div>
+                            </div>
+                            <input type="text" class="form-control" id="fecha_verificacion" name="fecha_verificacion"
+                                placeholder="<%=formatted_date%>"  autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6" hidden id='divplat'>
+                        <label for="Titulo">Plataforma</label>
+                        <select class="form-control" name="plataforma" id="plataforma">
+                            <option value="" selected><%=data8[0].plataforma%></option>
+                            <% for (var i = 0; i < data.length; i++) { %>
+                            <option><%= data[i].subarea %></option>
+                            <% } %>
+                        </select>
+                    </div>
+
+                    <div class="form-group  col-lg-6" hidden id='divdesc'>
+                        <label for="Titulo" id='desc'></label>
+                        <input type="text" class="form-control" id="descripcion" value="<%=data8[0].equipo_descripcion%>" name="descripcion" >
+                    </div>
+                </div>
+                <!------->
+                
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Ubicacion</label>
+                        <select class="form-control" name="ubicacion" id="ubicacion" >
+                            <option value="" selected><%=data8[0].equipo_ubicacion%></option>
+                            <% for (var i = 0; i < data2.length; i++) { %>
+                            <option id="jaula"><%= data2[i].ubicacion %></option>
+                            <% } %>
+                            <% for (var i = 0; i < data.length; i++) { %>
+                                <option id="produccion"><%= data[i].subarea %></option>
+                            <% } %>
+                        </select>
+                    </div>
+
+
+                </div>
+
+
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="ryr" name="ryr">
+                        <label class="form-check-label" for="ryr">Estudio R&R</label>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+
+                    <div class="form-group col-lg-6" id="ryrp" hidden>
+                        <label for="Titulo">Periodo de Estudio R&R (Meses)</label>
+                        <select class="form-control" name="periodoryr" id="periodoryr" >
+                            <option value="" selected><%= data8[0].equipo_ryr%></option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                            <option>24</option>
+                            <option>36</option>
+
+
+                        </select>
+                    </div>
+
+                    <div class="col-lg-6" hidden id="ryru">
+                        <label for="inlineFormInputGroup">Ultima Estudio R&R</label>
+                        <div class="input-group ">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><span class="fas fa-calendar"></span></div>
+                            </div>
+                            <input type="text" class="form-control" id="fecha_verificacionryr" name="fecha_verificacionryr"
+                                 autocomplete="off" placeholder="<%=formatted_date2%>">
+                        </div>
+                    </div>
+                </div>
+                <!------->
+
+                <div class="box-footer">
+                    <button id="btnguardar" type="submit" class="btn btn-primary"
+                        onclick="$('form').attr('action', '/guardar_modificacion');">Guardar</button>
+                </div>
+        </form>
+    </div>
+    <!-- /.box -->
+
+    <% include ./static/footer %>
+</div>
+</body>
+
+</html>
+
+<script>
+    equipo = <%- JSON.stringify(data8) %>;
+    
+    $('#fecha_verificacion').datepicker({
+        format: "yyyy-m-d",
+        orientation: "bottom",
+        todayHighlight: true
+    });
+
+    $('#fecha_verificacionryr').datepicker({
+        format: "yyyy-m-d",
+        orientation: "bottom",
+        todayHighlight: true
+    });
+
+    $( document ).ready(function() {
+
+        if (equipo[0].id_tipo === 20) {
+
+            $('#divplat').removeAttr('hidden');
+            $('#divdesc').removeAttr('hidden');
+            $("#desc").text("Numero de Parte");
+            
+        } else {
+            
+            $("#divplat").attr("hidden", true);
+            $('#divdesc').removeAttr('hidden');
+            $("#desc").text("Descripcion");
+            $("#plataforma").removeAttr('required');
+        }
+
+
+
+        if(equipo[0].equipo_ryr !=null){
+            $("#ryru").attr("hidden", false);
+            $("#ryrp").attr("hidden", false);
+            $("#ryr").prop('checked', true);
+        }
+});
+
+    tipo.addEventListener("change", function (e) {
+
+        if ($('#tipo').val() == 'Gage de Inspeccion Final') {
+            $('#divplat').removeAttr('hidden');
+            $('#divdesc').removeAttr('hidden');
+            $("#desc").text("Numero de Parte");
+            $('select[name*="ubicacion"] option[id="jaula"]').show();
+            
+        } else {
+            $("#divplat").attr("hidden", true);
+            $('#divdesc').removeAttr('hidden');
+            $("#desc").text("Descripcion");
+            $("#plataforma").removeAttr('required');
+            $('select[name*="ubicacion"] option[id="jaula"]').hide();
+        }
+
+    });
+
+
+    $('#ryr').click(function(){
+        
+        if (this.checked) {
+            $("#ryrp").attr("hidden", false);
+            $("#ryru").attr("hidden", false);
+        }else{
+            $("#ryrp").attr("hidden", true);
+            $("#ryru").attr("hidden", true);
+    
+        }
+    
+        }) 
+
+
+    ///////////////////////////////
+
+
+
+</script>

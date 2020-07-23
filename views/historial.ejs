@@ -1,0 +1,71 @@
+<% include ./static/header %>
+<% include ./static/sidebar %>
+<% include ./static/navbar %>
+
+
+<div class="col-md-10 col-lg-10-2 col-xl-11">
+        <br>
+    <h3 class="box-title">Historial Entrada/Salida </h3>
+    <div class="row">
+        <div class="box-header col-lg-1">
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<!-- /.box-header -->
+<div class="table-responsive">
+<div class="containerTable">
+<div class="table table-responsive" id="table">
+    <table id="myTable" class="table table-bordered table-striped">
+        <thead class="thead-dark">
+
+            <th>ID Equipo</th>
+            <th>Accion</th>
+            <th>Autorizado Por:</th>
+            <th>Solicitado Por:</th>
+            <th>Ubicacion</th>
+            <th>Comentario</th>
+            <th>Fecha</th>
+
+        </thead>
+
+        <tbody>
+            <%if(data) { %>
+            <% for (var i = 0; i < data.length; i++) { %>
+
+                <%
+                let date = data[i].fecha
+                date.setHours(date.getHours()-7);
+                var myDate_string = date.toISOString();
+                var myDate_string = myDate_string.replace("T","  Hora: ");
+                var myDate_string = myDate_string.substring(0, myDate_string.length - 5);
+                %>
+
+
+            <tr class="table_roww">
+
+                <td class="table_id"><%= data[i].equipo_id %></td>
+                <td><%= data[i].accion%></td>
+                <td><%= data[i].emp_aut %></td>
+                <td><%= data[i].emp_req%></td>
+                <td><%= data[i].ubicacion %></td>
+                <td class="table_long_text"><%= data[i].comentario %></td>
+                <td><%= myDate_string %></td>
+
+            </tr>
+            <% } %>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+<% include ./static/footer %>
+</div>
+</body>
+
+</html>

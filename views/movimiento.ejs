@@ -1,0 +1,221 @@
+<% include ./static/header %>
+<% include ./static/sidebar %>
+<% include ./static/navbar %>
+
+<div class="col-md-6 col-lg-10-2">
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="box-header with-border">
+                <br>
+            <h3 class="box-title">Entrada / Salida</h3>
+        </div>
+        <div class="alert alert-success text-center mt-1" id='success-alert' role="alert" hidden>
+            <span>Movimiento Guardado</span>
+          </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form action="/andon_guardad" method="POST">
+            <div class="box-body">
+
+                <!------->
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Autorizado Por:</label>
+                        <input type="text" class="form-control" id="aut_empleado" value="<%= data4 %> - <%= data6 %>" 
+                            name="aut_empleado" readonly>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Solicitado Por: </label><label id="req_empleadolabel"></label>
+                        <input type="text" class="form-control" id="req_empleado" name="req_empleado" required>
+                    </div>
+                </div>
+
+                <!------->
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">ID Equipo: </label> <label id="msg"> </label>
+                        <input type="text" class="form-control" id="id_equipo" name="id_equipo" required>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Accion</label>
+                        <select class="form-control" name="accion" id="accion" required>
+                            <option value="" selected>Seleccionar</option>
+                            <option id="entrada">Entrada</option>
+                            <option id="salida">Salida</option>
+
+                        </select>
+                    </div>
+
+                </div>
+                <!------->
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Ubicacion</label>
+                        <select class="form-control" name="ubicacion" id="ubicacion" required>
+                            <option value="" selected>Seleccionar</option>
+                            <% for (var i = 0; i < data2.length; i++) { %>
+                            <option id="jaula"><%= data2[i].ubicacion %></option>
+                            <% } %>
+                            <% for (var i = 0; i < data.length; i++) { %>
+                            <option id="produccion"><%= data[i].subarea %></option>
+                            <% } %>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Descripcion">Comentario:</label>
+                    <textarea type="text" class="form-control " rows="3" name="comentario" ></textarea>
+                </div>
+
+                <div class="box-footer ">
+                    <button id="btnguardar" type="submit" class="btn btn-primary col-lg-12"
+                        onclick="$('form').attr('action', '/guardar_movimiento');" disabled>Guardar</button>
+                </div>
+        </form>
+    </div>
+    <!-- /.box -->
+
+    <% include ./static/footer %>
+</div>
+</body>
+
+</html>
+
+<script>
+document.getElementById("req_empleado").focus();
+
+    id_equipo.addEventListener("keyup", function (e) {
+        equipo = <%- JSON.stringify(data5) %>;
+        jaula = <%- JSON.stringify(data2) %>;
+
+        var msg = document.getElementById("msg");
+        var idin = document.getElementById("id_equipo");
+
+        var id = $('#id_equipo').val();
+
+        $('#accion').val()
+        $('#ubicacion').val()
+
+
+        for (var i = 0; i < equipo.length; i++) {
+            if (id == equipo[i].equipo_id) {
+
+
+                $('#btnguardar').prop("disabled", false);
+                msg.innerHTML = ' Correcto';
+                idin.classList.remove('border-danger');
+                msg.classList.remove('text-danger');
+                msg.classList.add('text-success');
+                idin.classList.add('border-success');
+
+
+                if (equipo[i].equipo_tipo == 20) {
+                    $('select[name*="ubicacion"] option[id="jaula"]').show();
+
+                    for (var y = 0; y < jaula.length; y++) {
+
+                    if(equipo[i].equipo_ubicacion==jaula[y].ubicacion){
+                        $('select[name*="accion"] option[id="entrada"]').hide();
+                        $('select[name*="accion"] option[id="salida"]').show();
+                        $('#ubicacion').prop("required", true);
+                        break;
+                    }else if(equipo[i].equipo_ubicacion=='Sin Ubicacion'){
+                        $('select[name*="accion"] option[id="entrada"]').show();
+                        $('select[name*="accion"] option[id="salida"]').show();
+                        $('#ubicacion').prop("required", false);
+                    }else{
+                        $('select[name*="accion"] option[id="entrada"]').show();
+                        $('select[name*="accion"] option[id="salida"]').hide();
+                        $('#ubicacion').prop("required", false);
+                    }
+
+                }
+                }else{
+                    $('select[name*="ubicacion"] option[id="jaula"]').hide();
+                    $('select[name*="accion"] option[id="entrada"]').show();
+                }
+
+                break;
+
+            } else {
+
+                $('#btnguardar').prop("disabled", true);
+                msg.innerHTML = ' No Registrado';
+                msg.classList.add('text-danger');
+                idin.classList.add('border-danger');
+
+            }
+        }
+
+    });
+
+    accion.addEventListener("change", function (e) {
+
+        if($('#accion').val()=='Entrada'){
+            $('select[name*="ubicacion"] option[id="jaula"]').show();
+        }else{
+            $('select[name*="ubicacion"] option[id="jaula"]').hide();
+        }
+    });
+
+
+//////////////////////////////////////////////////////////////////////////////
+
+req_empleado.addEventListener("keyup", function (e) {
+    empleados = <%- JSON.stringify(data3) %>;
+    var escaneado = $('#req_empleado').val();
+    let gafete;
+    if (escaneado.length == 9) {
+
+      if (escaneado[0] == 1 && escaneado[1] == 2 && escaneado[2] != 0) {
+        gafete = escaneado.substring(2, 8);
+        $('#user').val(gafete);
+
+      } else if (escaneado[0] == 1 && escaneado[1] == 2 && escaneado[2] == 0) {
+        gafete = escaneado.substring(3, 8);
+        $('#user').val(gafete);
+      }
+
+    } else {
+      gafete = escaneado
+      $('#user').val(gafete);
+    }
+
+    for (var i = 0; i < empleados.length; i++) {
+        if (gafete == empleados[i].emp_id) {
+
+            $('#req_empleado').val(empleados[i].emp_id + ' - '+ empleados[i].emp_nombre);
+            $('#req_empleado').prop("readonly", true);
+            $('#btnguardar').prop("disabled", false);
+            document.getElementById("id_equipo").focus();
+          break;
+
+        } else{
+
+            $('#btnguardar').prop("disabled", true);
+        }
+      }
+
+
+  });
+
+////////////////////////////////////////////////////////////////////////////////////////
+$( document ).ready(function() {
+    nuevo = <%- JSON.stringify(data7) %>;
+  
+    if(nuevo=='true'){
+        $('#success-alert').prop("hidden", false);
+    $("#success-alert").show()
+          setTimeout(function () {
+            $("#success-alert").slideUp(1000);
+          }, 1000);
+        }
+});
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+</script>
