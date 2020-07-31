@@ -678,9 +678,9 @@ funcion.sendAnualNotificacion = (color, dmax, dmin,titulo) => {
 //Enviar correos cada determinado tiempo
 var rule = new schedule.RecurrenceRule();
 //rule.dayOfWeek = [new schedule.Range(1, 5)];
-//rule.hour = 6;
+rule.hour = 6;
 rule.minute = 0;
-rule.second = 1;
+rule.second = 0;
 
 schedule.scheduleJob(rule, function () {
 
@@ -689,6 +689,23 @@ schedule.scheduleJob(rule, function () {
     funcion.sendNotificacion(1, '#f0ad4e', 15, 10, "Estudios R&R", "ryr");
     funcion.sendNotificacion(2, '#d9534f', 10, -1000, "Estudios R&R", "ryr");
     funcion.sendAnualNotificacion( '#d9534f', 10, -1000, "Recordatorio Anual");
+
+
+});
+
+
+
+
+var rule2 = new schedule.RecurrenceRule();
+//rule.dayOfWeek = [new schedule.Range(1, 5)];
+//rule2.hour = 6;
+//rule2.minute = 0;
+rule2.second = 1;
+
+schedule.scheduleJob(rule2, function () {
+
+    funcion.sendNotificacion(2, '#d9534f', 10, -1000, "Verificaciones", "verificacion");
+
 
 
 });
