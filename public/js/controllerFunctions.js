@@ -28,7 +28,7 @@ funcion.sendEmail = (dataEmail,tipo) => {
     
         }, function (err) {
             if (err) {
-                console.log(err)
+                console.log("EMAIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIL"+err)
                 return;
             }
             console.log('mail sent')
@@ -48,7 +48,7 @@ funcion.sendEmail = (dataEmail,tipo) => {
     
         }, function (err) {
             if (err) {
-                console.log("EMAIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIL"+err)
+                console.log(err)
                 return;
             }
             console.log('mail sent')
