@@ -28,7 +28,7 @@ funcion.sendEmail = (dataEmail,tipo) => {
     
         }, function (err) {
             if (err) {
-                console.log("EMAIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIL"+err)
+                console.log(err)
                 return;
             }
             console.log('mail sent')
@@ -696,19 +696,19 @@ schedule.scheduleJob(rule, function () {
 
 
 
-var rule2 = new schedule.RecurrenceRule();
-//rule.dayOfWeek = [new schedule.Range(1, 5)];
-//rule2.hour = 6;
-//rule2.minute = 0;
-rule2.second = 1;
+// var rule2 = new schedule.RecurrenceRule();
+// //rule.dayOfWeek = [new schedule.Range(1, 5)];
+// //rule2.hour = 6;
+// //rule2.minute = 0;
+// rule2.second = 1;
 
-schedule.scheduleJob(rule2, function () {
+// schedule.scheduleJob(rule2, function () {
 
-    funcion.sendNotificacion(2, '#d9534f', 10, -1000, "Verificaciones", "verificacion");
+//     funcion.sendNotificacion(2, '#d9534f', 10, -1000, "Verificaciones", "verificacion");
 
 
 
-});
+// });
 
 
 
