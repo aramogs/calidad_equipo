@@ -678,9 +678,9 @@ funcion.sendAnualNotificacion = (color, dmax, dmin,titulo) => {
 //Enviar correos cada determinado tiempo
 var rule = new schedule.RecurrenceRule();
 //rule.dayOfWeek = [new schedule.Range(1, 5)];
-rule.hour = 6;
+//rule.hour = 6;
 rule.minute = 0;
-rule.second = 0;
+rule.second = 1;
 
 schedule.scheduleJob(rule, function () {
 
