@@ -35,12 +35,12 @@
                 <div class="row">
                     <div class="form-group col-lg-6">
                         <label for="Titulo">ID Equipo: </label> <label id="msg"> </label>
-                        <input type="text" class="form-control" id="id_equipo" name="id_equipo" required>
+                        <input type="text" class="form-control" id="id_equipo" name="id_equipo" required >
                     </div>
 
                     <div class="form-group col-lg-6">
                         <label for="Titulo">Accion</label>
-                        <select class="form-control" name="accion" id="accion" required>
+                        <select class="form-control" name="accion" id="accion" required disabled>
                             <option value="" selected>Seleccionar</option>
                             <option id="entrada">Entrada</option>
                             <option id="salida">Salida</option>
@@ -53,7 +53,7 @@
                 <div class="row">
                     <div class="form-group col-lg-6">
                         <label for="Titulo">Ubicacion</label>
-                        <select class="form-control" name="ubicacion" id="ubicacion" required>
+                        <select class="form-control" name="ubicacion" id="ubicacion" required disabled>
                             <option value="" selected>Seleccionar</option>
                             <% for (var i = 0; i < data2.length; i++) { %>
                             <option id="jaula"><%= data2[i].ubicacion %></option>
@@ -99,9 +99,10 @@ document.getElementById("req_empleado").focus();
         $('#accion').val()
         $('#ubicacion').val()
 
-
         for (var i = 0; i < equipo.length; i++) {
             if (id == equipo[i].equipo_id) {
+
+                
 
 
                 $('#btnguardar').prop("disabled", false);
@@ -138,6 +139,7 @@ document.getElementById("req_empleado").focus();
                     $('select[name*="accion"] option[id="entrada"]').show();
                 }
 
+                $('#accion').prop("disabled", false);
                 break;
 
             } else {
@@ -159,6 +161,8 @@ document.getElementById("req_empleado").focus();
         }else{
             $('select[name*="ubicacion"] option[id="jaula"]').hide();
         }
+
+        $('#ubicacion').prop("disabled", false);
     });
 
 
@@ -191,6 +195,7 @@ req_empleado.addEventListener("keyup", function (e) {
             $('#req_empleado').prop("readonly", true);
             $('#btnguardar').prop("disabled", false);
             document.getElementById("id_equipo").focus();
+            
           break;
 
         } else{
