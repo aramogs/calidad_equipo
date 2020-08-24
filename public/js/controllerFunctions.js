@@ -266,7 +266,7 @@ funcion.controllerSelectedEquipo = (id_equipo, callback) => {
 funcion.controllerTablaGages = (callback) => {
     db.query(`SELECT * FROM equipo_info
     WHERE (equipo_tipo=20)
-    AND status='Activo' AND equipo_ubicacion != 'Mezzanine' AND equipo_ubicacion NOT LIKE '%MZE%'
+    AND status='Activo'
     ORDER BY equipo_id DESC`, function (err, result, fields) {
         if (err) {
             callback(err, null);
