@@ -83,6 +83,19 @@ funcion.controllerUbicacion = (callback) => {
 }
 
 
+
+funcion.controllerMAXTR = (callback) => {
+    db.query(`SELECT MAX(CAST(SUBSTRING(equipo_id, LOCATE('-', equipo_id) + 1) AS UNSIGNED)) AS max_value FROM equipo_info AS t;`, function (err, result, fields) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, result);
+        }
+    })
+
+}
+
+
 funcion.controllerInsertEquipo = (id, tipo, plataforma, descripcion, periodo, id_ubicacion, fecha, periodoryr, fecha_verificacionryr, callback) => {
 
     db.query(`

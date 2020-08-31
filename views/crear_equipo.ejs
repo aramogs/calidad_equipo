@@ -26,8 +26,8 @@
                 <div class="row">
                     <div class="form-group col-lg-6">
                         <label for="Titulo">ID Equipo: </label> <label id="msg"> </label>
-                        <input type="text" class="form-control" id="id" value="" name="id"
-                            onkeyup="this.value = this.value.toUpperCase();" required>
+                        <input type="text" class="form-control" id="id" value="TR-<%= next%>" name="id"
+                            onkeyup="this.value = this.value.toUpperCase();" readonly>
                     </div>
 
                     <div class="form-group col-lg-6">
@@ -176,37 +176,37 @@
         todayHighlight: true
     });
 
-    id.addEventListener("keyup", function (e) {
+    // id.addEventListener("keyup", function (e) {
 
-        equipo = <%- JSON.stringify(data5) %>;
-        var msg = document.getElementById("msg");
-        var idin = document.getElementById("id");
+    //     equipo = <%- JSON.stringify(data5) %>;
+    //     var msg = document.getElementById("msg");
+    //     var idin = document.getElementById("id");
 
-        var id = $('#id').val();
+    //     var id = $('#id').val();
 
 
-        for (var i = 0; i < equipo.length; i++) {
-            if (id == equipo[i].equipo_id) {
+    //     for (var i = 0; i < equipo.length; i++) {
+    //         if (id == equipo[i].equipo_id) {
 
-                $('#btnguardar').prop("disabled", true);
-                msg.innerHTML = ' Ya registrado';
-                idin.classList.remove('border-success');
-                msg.classList.remove('text-success');
-                msg.classList.add('text-danger');
-                idin.classList.add('border-danger');
-                break;
+    //             $('#btnguardar').prop("disabled", true);
+    //             msg.innerHTML = ' Ya registrado';
+    //             idin.classList.remove('border-success');
+    //             msg.classList.remove('text-success');
+    //             msg.classList.add('text-danger');
+    //             idin.classList.add('border-danger');
+    //             break;
 
-            } else {
+    //         } else {
 
-                $('#btnguardar').prop("disabled", false);
-                msg.innerHTML = ' ';
-                idin.classList.remove('border-danger');
-                msg.classList.add('text-success');
-                idin.classList.add('border-success');
-            }
-        }
+    //             $('#btnguardar').prop("disabled", false);
+    //             msg.innerHTML = ' ';
+    //             idin.classList.remove('border-danger');
+    //             msg.classList.add('text-success');
+    //             idin.classList.add('border-success');
+    //         }
+    //     }
 
-    });
+    // });
 
     tipo.addEventListener("change", function (e) {
 

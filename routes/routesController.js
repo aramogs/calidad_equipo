@@ -117,9 +117,16 @@ controller.crear_equipo_POST = (req, res) => {
                         if (err) throw err;
                         funcion.controllerUbicacion((err, result2) => {
                             if (err) throw err;
+                            funcion.controllerMAXTR((err, result7) => {
+                                if (err) throw err;
 
-                            res.render('crear_equipo.ejs', {
-                                data: result1, data2: result2, data3: result3, data4: numeroEmpleado, data5: result4, data6: result5, data7: result6
+                           
+                                const next= result7[0].max_value+1;
+
+                                res.render('crear_equipo.ejs', {
+                                    data: result1, data2: result2, data3: result3, data4: numeroEmpleado, data5: result4, data6: result5, data7: result6, next
+                                });
+
                             });
 
                         });
@@ -617,11 +624,11 @@ controller.guardar_notificar_POST = (req, res) => {
     }
 
     funcion.controllerSelectNotificar(correo, (err, result0) => {
-            if (result0.length < 1) {
-                tipo = 0
-            }else if (result0[0].tipo == 1) {
-                tipo = 2
-            }
+        if (result0.length < 1) {
+            tipo = 0
+        } else if (result0[0].tipo == 1) {
+            tipo = 2
+        }
         funcion.controllerInsertNotificar(correo, esc1, esc2, tipo, (err, result2) => {
             if (err) throw err;
             funcion.controllerTablaNotificar((err, result3) => {
