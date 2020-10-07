@@ -105,22 +105,28 @@
                 <%
                             if(days <=10 || days2 <=10){
                                classBtn = "danger"
+                               btnvalue="1"
                             }else if((days > 10  && days <= 15) || (days2 > 10  && days2 <= 15)){
                                 classBtn ="warning"
+                                btnvalue="2"
                             }else{
                                 classBtn="success"
+                                btnvalue="3"
                             }                  
                 %>
 
-                <td class="text-center" >
+                <td class="text-center">
+                    <span hidden><%=btnvalue%></span>
+                                  
                         <form method="POST">
                             <button name="equipoid" type="submit" formaction="/verificar"
-                                class="btn btn-<%=classBtn%> text-center">Verificar</button>
+                                class="btn btn-<%=classBtn%> text-center" >Verificar</button>
                             <input type="text" name="equipo_id2" value="<%=data[i].equipo_id%>" hidden>
                             <input type="text" name="user" id="user" value="<%= data2%>" hidden >
                             <input type="text" name="fecharyr" id="fecharyr" value="<%= formatted_date3%>" hidden >
-
                             <input type="text" name="tipoverificacion" id="tipoverificacion" value="verificacion" hidden >
+
+                            
                         </form>
                        
                     </td>

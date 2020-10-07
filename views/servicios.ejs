@@ -105,14 +105,18 @@
                 <%
                             if(days <=10 || days2 <=10){
                                classBtn = "danger"
+                               btnvalue="1"
                             }else if((days > 10  && days <= 15) || (days2 > 10  && days2 <= 15)){
                                 classBtn ="warning"
+                                btnvalue="2"
                             }else{
                                 classBtn="success"
+                                btnvalue="3"
                             }                  
                 %>
 
                 <td class="text-center" >
+                    <span hidden><%=btnvalue%></span>
                         <form method="POST">
                             <button name="equipoid" type="submit" formaction="/verificar"
                                 class="btn btn-<%=classBtn%> text-center">Verificar</button>
