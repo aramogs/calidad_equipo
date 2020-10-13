@@ -30,6 +30,7 @@
         <thead class="thead-dark">
 
             <th><span class="icoSidebar fas fa-minus"></span> Eliminar</th>
+            <th><span class="icoSidebar fas fa-pencil-alt"></span>  Detener</th>
             <th><span class="icoSidebar fas fa-pencil-alt"></span> Modificar</th>
 
             <th><span class="icoSidebar fas fa-hashtag"></span> ID Equipo</th>
@@ -85,6 +86,18 @@
                             class="btn btn-danger text-center">Eliminar</button>
                         <input type="text" name="equipo_id2" value="<%=data[i].equipo_id%>" hidden>
                         <input type="text" name="user" id="user" value="<%= data2%>" hidden >
+                        <input type="text" name="movimiento" id="movimiento" value="eliminar" hidden >
+                    </form>
+                   
+                </td>
+
+                <td class="text-center" >
+                    <form method="POST">
+                        <button name="equipoid" type="submit" formaction="/eliminar_equipo"
+                            class="btn btn-warning text-center">Detener</button>
+                        <input type="text" name="equipo_id2" value="<%=data[i].equipo_id%>" hidden>
+                        <input type="text" name="user" id="user" value="<%= data2%>" hidden >
+                        <input type="text" name="movimiento" id="movimiento" value="detener" hidden >
                     </form>
                    
                 </td>

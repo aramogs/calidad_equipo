@@ -192,9 +192,9 @@ funcion.controllerUpdateEquipoInfo = (id_equipo, tipo, periodo, fecha, plataform
 
 }
 
-funcion.controllerUpdateStatus = (id_equipo, callback) => {
+funcion.controllerUpdateStatus = (id_equipo,tipomov, callback) => {
     db.query(`UPDATE equipo_info SET 
-    status= "Baja"
+    status= "${tipomov}"
     WHERE equipo_id = "${id_equipo}"`, function (err, result, fields) {
         if (err) {
             callback(err, null);
@@ -248,7 +248,7 @@ funcion.controllerAllEquipo = (callback) => {
 }
 
 funcion.controllerAllEquipoMov = (callback) => {
-    db.query(`SELECT * FROM equipo_info WHERE status='Activo'`, function (err, result, fields) {
+    db.query(`SELECT * FROM equipo_info WHERE status!='Baja'`, function (err, result, fields) {
         if (err) {
             callback(err, null);
         } else {
@@ -279,7 +279,7 @@ funcion.controllerSelectedEquipo = (id_equipo, callback) => {
 funcion.controllerTablaGages = (callback) => {
     db.query(`SELECT * FROM equipo_info
     WHERE (equipo_tipo=20)
-    AND status='Activo'
+    AND status!='Baja'
     ORDER BY equipo_id DESC`, function (err, result, fields) {
         if (err) {
             callback(err, null);
@@ -293,7 +293,7 @@ funcion.controllerTablaGages = (callback) => {
 funcion.controllerTablaReubicar = (callback) => {
     db.query(`SELECT * FROM equipo_info
     WHERE (equipo_tipo=20)
-    AND status='Activo'
+    AND status!='Baja'
     AND equipo_ubicacion=''
     ORDER BY equipo_id DESC`, function (err, result, fields) {
         if (err) {
@@ -305,10 +305,10 @@ funcion.controllerTablaReubicar = (callback) => {
     })
 }
 
-funcion.controllerTablaEquipo = (status, callback) => {
+funcion.controllerTablaEquipo = (sign,status, callback) => {
     db.query(`SELECT * FROM equipo_info,  equipo_tipo
     WHERE (equipo_info.equipo_tipo = equipo_tipo.id_tipo) AND equipo_ubicacion != 'Mezzanine' AND equipo_ubicacion NOT LIKE '%MZE%'
-    AND status='${status}'
+    AND status${sign}'${status}'
     ORDER BY equipo_id`, function (err, result, fields) {
 
         if (err) {
@@ -457,10 +457,10 @@ funcion.controllerTablaNotificar = (callback) => {
 
 }
 
-funcion.controllerInsertBaja = (equipo_id, emp_id, motivo, callback) => {
+funcion.controllerInsertBaja = (equipo_id, emp_id, motivo,tipomov, callback) => {
     db.query(`
     INSERT INTO equipo_req (equipo_id, accion, emp_req, emp_aut, ubicacion, comentario, fecha)
-    VALUES( '${equipo_id}', 'Baja','','${emp_id}','','${motivo}', NOW())`, function (err, result, fields) {
+    VALUES( '${equipo_id}', '${tipomov}','','${emp_id}','','${motivo}', NOW())`, function (err, result, fields) {
         if (err) {
             callback(err, null);
         } else {

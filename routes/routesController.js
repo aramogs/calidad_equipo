@@ -269,7 +269,7 @@ controller.gages_GET = (req, res) => {
 
 controller.equipo_GET = (req, res) => {
 
-    funcion.controllerTablaEquipo('Activo', (err, result) => {
+    funcion.controllerTablaEquipo('!=','Baja', (err, result) => {
         if (err) throw err;
 
 
@@ -282,7 +282,7 @@ controller.equipo_GET = (req, res) => {
 
 controller.bajas_POST = (req, res) => {
 
-    funcion.controllerTablaEquipo('Baja', (err, result) => {
+    funcion.controllerTablaEquipo('!=','Activo', (err, result) => {
         if (err) throw err;
 
 
@@ -300,7 +300,7 @@ controller.activar_POST = (req, res) => {
         if (err) throw err;
 
 
-        funcion.controllerTablaEquipo('Baja', (err, result) => {
+        funcion.controllerTablaEquipo('!=','Activo', (err, result) => {
             if (err) throw err;
 
 
@@ -438,7 +438,7 @@ controller.guardar_verificacion_POST = (req, res) => {
         funcion.controllerUpdateFechaVerificacion(equipo_id, columna, (err, result2) => {
             if (err) throw err;
 
-            funcion.controllerTablaEquipo('Activo', (err, resultequipo) => {
+            funcion.controllerTablaEquipo('=','Activo', (err, resultequipo) => {
                 if (err) throw err;
 
                 funcion.controllerTablaRyR((err, resultryr) => {
@@ -480,7 +480,7 @@ controller.modificar_POST = (req, res) => {
 
         empleadoN = req.body.user + ' - ' + result2
 
-        funcion.controllerTablaEquipo('Activo', (err, result) => {
+        funcion.controllerTablaEquipo('=','Activo', (err, result) => {
             if (err) throw err;
 
 
@@ -495,9 +495,10 @@ controller.modificar_POST = (req, res) => {
 controller.eliminar_equipo_POST = (req, res) => {
     equipo = req.body.equipo_id2;
     user = req.body.user;
+    movimiento = req.body.movimiento;
 
     res.render('eliminar_equipo.ejs', {
-        data: equipo, data2: user
+        data: equipo, data2: user, data3: movimiento
     });
 
 
@@ -507,15 +508,20 @@ controller.guardar_eliminado_POST = (req, res) => {
     emp_id = req.body.user;
     equipo_id = req.body.equipo;
     motivo = req.body.motivo;
+    movimiento= req.body.movimiento
+    let tipomov
+    if(movimiento=="eliminar"){
+        tipomov="Baja"
+    }else{tipomov="Detenido"}
 
 
-    funcion.controllerInsertBaja(equipo_id, emp_id, motivo, (err, result2) => {
+    funcion.controllerInsertBaja(equipo_id, emp_id, motivo,tipomov, (err, result2) => {
         if (err) throw err;
 
-        funcion.controllerUpdateStatus(equipo_id, (err, result3) => {
+        funcion.controllerUpdateStatus(equipo_id, tipomov, (err, result3) => {
             if (err) throw err;
 
-            funcion.controllerTablaEquipo('Activo', (err, result) => {
+            funcion.controllerTablaEquipo('=','Activo', (err, result) => {
                 if (err) throw err;
 
                 res.render('modificar.ejs', {
@@ -579,7 +585,7 @@ controller.guardar_modificacion_POST = (req, res) => {
 
             empleado = req.body.user
 
-            funcion.controllerTablaEquipo('Activo', (err, result) => {
+            funcion.controllerTablaEquipo('=','Activo', (err, result) => {
                 if (err) throw err;
 
 
