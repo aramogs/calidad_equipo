@@ -97,6 +97,13 @@ controller.login = (req, res) => {
                                             data: loginId, data2: result
                                         });
                                     });
+                                }else if (loginId == 'laboratorio') {
+                                    funcionE.empleadosAccessAll(2, '>=', (err, result) => {
+
+                                        res.render('login.ejs', {
+                                            data: loginId, data2: result
+                                        });
+                                    });
                                 }
 }
 
@@ -822,6 +829,43 @@ controller.guardar_reubicar_POST = (req, res) => {
 
                 res.render('reubicar.ejs', {
                     data: result
+                });
+            });
+        });
+    });
+};
+
+
+controller.laboratorio_POST = (req, res) => {
+
+    numeroEmpleado = req.body.user;
+
+    funcion.controllerAreas((err, result6) => {
+        if (err) throw err;
+        funcion.controllerTipoEquipo((err, result5) => {
+            if (err) throw err;
+            funcion.controllerAllEquipo((err, result4) => {
+                if (err) throw err;
+                funcionE.empleadosNombre(numeroEmpleado, (err, result3) => {
+                    if (err) throw err;
+                    funcion.controllerPlataforma((err, result1) => {
+                        if (err) throw err;
+                        funcion.controllerUbicacion((err, result2) => {
+                            if (err) throw err;
+                            funcion.controllerMAXTR((err, result7) => {
+                                if (err) throw err;
+
+                           
+                                const next= result7[0].max_value+1;
+
+                                res.render('bitacora.ejs', {
+                                    data: result1, data2: result2, data3: result3, data4: numeroEmpleado, data5: result4, data6: result5, data7: result6, next
+                                });
+
+                            });
+
+                        });
+                    });
                 });
             });
         });

@@ -1,0 +1,217 @@
+<% include ./static/header %>
+<% include ./static/sidebar %>
+<% include ./static/navbar %>
+
+<div class="col-md-6 col-lg-10-2">
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <br>
+            <h3 class="box-title">Prueba de Laboratorio</h3>
+        </div>
+        <br>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form action="/guardar_equipo" method="POST">
+            <div class="box-body">
+                <!------->
+                <!-- Date format yyyy-m-d -->
+                <%
+                     var d = new Date();
+                     var mm = d.getMonth() + 1;
+                     var dd = d.getDate();
+                     var yy = d.getFullYear();
+                     var myDateString = yy + '-' + mm + '-' + dd; //(US)
+                     %>
+                <!------->
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Recibe: </label> <label id="msg"> </label>
+                        <input type="text" class="form-control" id="id" value="" name="id"
+                            onkeyup="this.value = this.value.toUpperCase();" >
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Requisitor: </label> <label id="msg"> </label>
+                        <input type="text" class="form-control" id="id" value="" name="id"
+                            onkeyup="this.value = this.value.toUpperCase();" >
+                    </div>
+
+
+                </div>
+                <!------->
+                <div class="row">
+
+
+
+
+                    <div class="col-lg-6">
+                        <label for="inlineFormInputGroup">Fecha Solicitud:</label>
+                        <div class="input-group ">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><span class="fas fa-calendar"></span></div>
+                            </div>
+                            <input type="text" class="form-control" id="fecha_verificacion" name="fecha_verificacion"
+                                placeholder="yyyy-m-d" required autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Departamento:</label>
+                        <select class="form-control" name="tipo" id="tipo" required>
+                            <option value="" selected>Seleccionar</option>
+                            <% for (var i = 0; i < data6.length; i++) { %>
+                            <option><%= data6[i].tipo%></option>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+
+          
+                <div class="row">
+
+
+
+
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Equipo:</label>
+                        <select class="form-control" name="tipo" id="tipo" required>
+                            <option value="" selected>Seleccionar</option>
+                            <% for (var i = 0; i < data6.length; i++) { %>
+                            <option><%= data6[i].tipo%></option>
+                            <% } %>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Tipo de Prueba:</label>
+                        <select class="form-control" name="tipo" id="tipo" required>
+                            <option value="" selected>Seleccionar</option>
+                            <% for (var i = 0; i < data6.length; i++) { %>
+                            <option><%= data6[i].tipo%></option>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Cantidad: </label> <label id="msg"> </label>
+                        <input type="number" class="form-control" id="id" value="TR-<%= next%>" name="id"
+                            onkeyup="this.value = this.value.toUpperCase();" >
+                    </div>
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+                <!------->
+
+                <br>
+                <div class="box-footer">
+                    <button id="btnguardar" type="submit" class="btn btn-primary"
+                        onclick="$('form').attr('action', '/guardar_equipo');">Guardar</button>
+                </div>
+        </form>
+    </div>
+    <!-- /.box -->
+
+    <% include ./static/footer %>
+</div>
+</body>
+
+</html>
+
+<script>
+    $('#fecha_verificacion').datepicker({
+        format: "yyyy-m-d",
+        orientation: "bottom",
+        todayHighlight: true
+    });
+    $('#fecha_verificacionryr').datepicker({
+        format: "yyyy-m-d",
+        orientation: "bottom",
+        todayHighlight: true
+    });
+
+    id.addEventListener("keyup", function (e) {
+
+        equipo = <%- JSON.stringify(data5) %>;
+        var msg = document.getElementById("msg");
+        var idin = document.getElementById("id");
+
+        var id = $('#id').val();
+
+
+        for (var i = 0; i < equipo.length; i++) {
+            if (id == equipo[i].equipo_id) {
+
+                $('#btnguardar').prop("disabled", true);
+                msg.innerHTML = ' Ya registrado';
+                idin.classList.remove('border-success');
+                msg.classList.remove('text-success');
+                msg.classList.add('text-danger');
+                idin.classList.add('border-danger');
+                break;
+
+            } else {
+
+                $('#btnguardar').prop("disabled", false);
+                msg.innerHTML = ' ';
+                idin.classList.remove('border-danger');
+                msg.classList.add('text-success');
+                idin.classList.add('border-success');
+            }
+        }
+
+    });
+
+    tipo.addEventListener("change", function (e) {
+
+
+        if ($('#tipo').val() == 'Gage de Inspeccion Final') {
+            $('#divplat').removeAttr('hidden');
+            $('#divdesc').removeAttr('hidden');
+            $("#desc").text("Numero de Parte");
+            $("#plataforma").attr("required", true);
+            
+        } else {
+            $("#divplat").attr("hidden", true);
+            $('#divdesc').removeAttr('hidden');
+            $("#desc").text("Descripcion");
+            $("#plataforma").removeAttr('required');
+        }
+
+        
+    });
+
+
+    $('#ryr').click(function(){
+        
+    if (this.checked) {
+        $("#ryrp").attr("hidden", false);
+        $("#ryru").attr("hidden", false);
+    }else{
+        $("#ryrp").attr("hidden", true);
+        $("#ryru").attr("hidden", true);
+
+    }
+
+    }) 
+
+
+
+    ///////////////////////////////
+
+
+
+</script>

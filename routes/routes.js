@@ -37,7 +37,7 @@ router.post('/reubicar', routesController.reubicar_POST);
 router.post('/reubicar_gage', routesController.reubicar_gage_POST);
 router.post('/guardar_reubicar', routesController.guardar_reubicar_POST);
 router.post('/activar', routesController.activar_POST);
-
+router.post('/laboratorio', routesController.laboratorio_POST);
 
 router.get('*', (req, res) => {
   res.send('404 Page not found');
