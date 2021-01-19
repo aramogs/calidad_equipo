@@ -1,0 +1,153 @@
+<% include ./static/header %>
+<% include ./static/sidebar %>
+<% include ./static/navbar %>
+
+<div class="col-md-6 col-lg-10-2">
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <br>
+            <h3 class="box-title">Prueba de Laboratorio</h3>
+        </div>
+        <br>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form action="/guardar_prueba" method="POST">
+            <div class="box-body">
+       
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Recibe: </label> <label id="msg"> </label>
+                        <input type="text" class="form-control" id="emp_recibe" value="<%=data.emp_aut%>"  name="emp_recibe"
+                            onkeyup="this.value = this.value.toUpperCase();" readonly>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Requisitor: </label> <label id="msg"> </label>
+                        <input type="text" class="form-control" id="req_empleado" value="<%=data.emp_req%>" name="req_empleado" readonly>
+                    </div>
+
+
+                </div>
+                <!------->
+                <div class="row">
+
+
+                        <%
+                        let date = data.fecha_req
+                        formatted_date =  date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() 
+
+                        let formatted_date2
+                        if(data.fecha_entrega != null){
+                        let date2 = data.fecha_entrega
+                        formatted_date2 =  date2.getFullYear() + "-" + (date2.getMonth() + 1) + "-" + date2.getDate()
+                        
+                    }else{
+                        formatted_date2=""
+                    }
+                        %>
+
+                    <div class="col-lg-6">
+                        <label for="inlineFormInputGroup">Fecha Solicitud:</label>
+                        <div class="input-group ">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><span class="fas fa-calendar"></span></div>
+                            </div>
+                            <input type="text" class="form-control" id="fecha" name="fecha"
+                                value="<%=formatted_date%>" required autocomplete="off" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Departamento:</label>
+                        <input type="text" class="form-control" id="fecha" name="fecha"
+                                value="<%=data.departamento%>" required autocomplete="off" readonly>
+                    </div>
+                </div>
+
+          
+                <div class="row">
+
+
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Equipo:</label>
+                        <input type="text" class="form-control" id="fecha" name="fecha"
+                                value="<%=data.equipo%>" required autocomplete="off" readonly>
+                     
+                        </select>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Tipo de Prueba:</label>
+                        <input type="text" class="form-control" id="fecha" name="fecha"
+                                value="<%=data.prueba%>" required autocomplete="off" readonly>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Cantidad: </label> <label id="msg"> </label>
+                        <input type="number" class="form-control" id="cantidad" value="<%=data.cantidad%>" name="cantidad"
+                            onkeyup="this.value = this.value.toUpperCase();"  readonly>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        <label for="Descripcion">Comentario:</label>
+                        <textarea type="text" class="form-control " rows="3" name="comentario" value="" readonly><%=data.comentario_req%></textarea>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label for="inlineFormInputGroup">Fecha Entrega:</label>
+                        <div class="input-group ">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><span class="fas fa-calendar"></span></div>
+                            </div>
+                            <input type="text" class="form-control" id="fecha" name="fecha"
+                                value="<%=formatted_date2%>" required autocomplete="off" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Entrego: </label> <label id="msg"> </label>
+                        <input type="text" class="form-control" id="emp_recibe" value="<%=data.emp_entrega%>"  name="emp_recibe"
+                            onkeyup="this.value = this.value.toUpperCase();" readonly>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Resultado: </label> <label id="msg"> </label>
+                        <input type="text" class="form-control" id="emp_recibe" value="<%=data.resultado%>"  name="emp_recibe"
+                            onkeyup="this.value = this.value.toUpperCase();" readonly>
+                    </div>
+                </div>
+           
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        <label for="Descripcion">Comentario:</label>
+                        <textarea type="text" class="form-control " rows="3" name="comentario" readonly > <%=data.comentario_entrega%></textarea>
+                    </div>
+                    
+                </div>
+                
+                <!------->
+                <input type="number" class="form-control" id="user" value="" name="user" hidden>
+
+                <br>
+
+        </form>
+    </div>
+    <!-- /.box -->
+
+    <% include ./static/footer %>
+</div>
+</body>
+
+</html>
+

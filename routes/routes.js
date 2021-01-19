@@ -38,6 +38,11 @@ router.post('/reubicar_gage', routesController.reubicar_gage_POST);
 router.post('/guardar_reubicar', routesController.guardar_reubicar_POST);
 router.post('/activar', routesController.activar_POST);
 router.post('/laboratorio', routesController.laboratorio_POST);
+router.post('/guardar_prueba', routesController.guardar_prueba_POST);
+router.post('/registrar_prueba', routesController.registrar_prueba_POST);
+router.post('/revisar_prueba', routesController.revisar_prueba_POST);
+router.post('/entrega_prueba', routesController.entrega_prueba_POST);
+router.post('/guardar_entrega', routesController.guardar_entrega_POST);
 
 router.get('*', (req, res) => {
   res.send('404 Page not found');

@@ -1,0 +1,138 @@
+<% include ./static/header %>
+<% include ./static/sidebar %>
+<% include ./static/navbar %>
+
+
+<div class="col-md-10 col-lg-10-2 col-xl-11">
+    <div class="row col-lg-12">
+        
+   
+    <div class="row  col-lg-3">
+        <div class="box-header">
+            <br>
+            <h3 class="box-title">Pruebas de Laboratorio</h3>
+
+            
+        </div>
+    </div>
+    <div class="row  col-lg-6">
+       
+        <form method="POST">
+            <br>
+            <button name="registar" type="submit" formaction="/registrar_prueba"
+                class="btn btn-success text-center">Registrar Prueba</button>
+                <input type="number" class="form-control" id="user" value="<%= data3 %>" name="user" hidden>
+        </form>
+    </div>
+</div>
+
+</div>
+
+<div class="table-responsive">
+<div class="containerTable">
+<!-- /.box-header -->
+
+
+<div class="table table-responsive" id="table">    
+    <table id="myTable" class="table table-bordered table-striped">
+        <thead class="thead-dark">
+
+            <th><span class="icoSidebar fas fa-history"></span> Revisar</th>
+            <th><span class="icoSidebar fas fa-history"></span> Entrega</th>
+            <th><span class="icoSidebar fas fa-history"></span> Id</th>
+            <th><span class="icoSidebar fas fa-check"></span> Recibio</th>
+            <th><span class="icoSidebar fas fa-check"></span> Requisitor</th>
+            <th><span class="icoSidebar fas fa-hashtag"></span> Departamento</th>
+            <th><span class="icoSidebar fas fa-info"></span> Equipo</th>
+            <th><span class="icoSidebar fas fa-car"></span> Prueba</th>
+            <th><span class="icoSidebar fas fa-info-circle"></span> Cantidad</th>
+            <th><span class="icoSidebar fas fa-map-marker"></span> Fecha Recepcion</th>
+            <th><span class="icoSidebar fas fa-map-marker"></span> Status</th>
+            <th><span class="icoSidebar fas fa-map-marker"></span> Resultado</th>
+            <th><span class="icoSidebar fas fa-map-marker"></span> Fecha Entrega</th>
+        </thead>
+
+        <tbody>
+
+            <%if(data) { %>
+                <% for (var i = 0; i < data.length; i++) { %>
+                    <% 
+                    let date = data[i].fecha_req
+                    let formatted_date =  date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() 
+
+                    %>
+                    <% 
+                    let formatted_date2
+                    if(data[i].fecha_entrega != null){
+                        let date2 = data[i].fecha_entrega
+                        formatted_date2 =  date2.getFullYear() + "-" + (date2.getMonth() + 1) + "-" + date2.getDate() 
+                    }else{
+                        formatted_date2=""
+                    }
+                    
+                    let status= data[i].status
+                    let btnstatus
+                    let colorb
+                    if(status=="Entregado"){
+                        btnstatus="disabled"
+                        colorb= "success"
+                    }else{
+                        btnstatus=""
+                        colorb= "warning"
+                    }
+                    %>
+
+            <tr class="table_roww">
+                <td class="text-center" >
+                    <form method="POST">
+                        <button name="equipoid" type="submit" formaction="/revisar_prueba"
+                            class="btn btn-secondary text-center" >Revisar</button>
+                        <input type="text" name="user" value="<%= data3 %>" hidden>
+                        <input type="text" name="id" value="<%= data[i].id%>" hidden>
+                    </form>
+                   
+                </td>
+                <td class="text-center" >
+                    <form method="POST">
+                        <button name="equipoid" type="submit" formaction="/entrega_prueba"
+                            class="btn btn-<%= colorb %> text-center" <%= btnstatus %>>Entregar</button>
+                        <input type="text" name="user" value="<%= data3 %>" hidden>
+                        <input type="text" name="id" value="<%= data[i].id%>" hidden>
+                    </form>
+                   
+                </td>
+
+
+                <td><%= data[i].id%></td>
+                <td><%= data[i].emp_aut%></td>
+                <td><%= data[i].emp_req%></td>
+                <td><%= data[i].departamento%></td>
+                <td><%= data[i].equipo%></td>
+                <td><%= data[i].prueba%></td>
+                <td><%= data[i].cantidad%></td>
+                <td><%= formatted_date %></td>
+                <td><%= data[i].status%></td>
+                <td><%= data[i].resultado%></td>
+                <td><%= formatted_date2 %></td>
+
+            </tr>
+          
+            <% } %>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+<% include ./static/footer %>
+</div>
+</body>
+
+</html>
+<script>
+    $(document).ready(function () {
+        w = document.getElementById("wrapper");
+        w.classList.add('toggled');
+
+    });
+</script>

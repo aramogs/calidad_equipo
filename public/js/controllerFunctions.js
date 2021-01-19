@@ -111,6 +111,22 @@ funcion.controllerInsertEquipo = (id, tipo, plataforma, descripcion, periodo, id
 
 }
 
+
+funcion.controllerInsertPrueba = (recibe, emp_req, fecha, departamento, equipo, prueba, cantidad, comentario, callback) => {
+
+    db.query(`
+    INSERT INTO lab_bitacora (emp_aut,emp_req, fecha_req, departamento, equipo, prueba, cantidad, comentario_req, status)
+    VALUES( '${recibe}','${emp_req}', '${fecha}','${departamento}','${equipo}','${prueba}',${cantidad},'${comentario}', 'Abierta')`, function (err, result, fields) {
+        if (err) {
+            callback(err, null);
+        } else {
+
+            callback(null, result);
+        }
+    })
+
+}
+
 funcion.controllerInsertEquipoN = (id, tipo, plataforma, descripcion, periodo, id_ubicacion, fecha, callback) => {
 
     db.query(`
@@ -144,6 +160,20 @@ funcion.controllerUpdateEquipo = (id_equipo, id_ubicacion, callback) => {
     db.query(`UPDATE equipo_info SET 
     equipo_ubicacion= "${id_ubicacion}"
     WHERE equipo_id = "${id_equipo}"`, function (err, result, fields) {
+        if (err) {
+            callback(err, null);
+        } else {
+
+            callback(null, result);
+        }
+    })
+
+}
+
+funcion.controllerUpdateEntrega = (id,emp_entrega, fecha, resultado, comentario, callback) => {
+    db.query(`UPDATE lab_bitacora SET 
+    status= "Entregado", emp_entrega='${emp_entrega}', fecha_entrega='${fecha}',resultado='${resultado}',comentario_entrega='${comentario}'
+    WHERE id = ${id}`, function (err, result, fields) {
         if (err) {
             callback(err, null);
         } else {
@@ -350,6 +380,32 @@ funcion.controllerTablaRyR = (callback) => {
 }
 
 
+funcion.controllerTablaBitacora= (callback) => {
+    db.query(`SELECT * FROM lab_bitacora`, function (err, result, fields) {
+
+        if (err) {
+            callback(err, null);
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.controllerPrueba= (id,callback) => {
+    db.query(`SELECT * FROM lab_bitacora WHERE id=${id}`, function (err, result, fields) {
+
+        if (err) {
+            callback(err, null);
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+
+
 funcion.controllerTablaServicios = (callback) => {
     db.query(`SELECT * FROM equipo_info,  equipo_tipo
     WHERE (equipo_info.equipo_tipo = equipo_tipo.id_tipo) 
@@ -488,6 +544,33 @@ funcion.controllerTipoEquipo = (callback) => {
 funcion.controllerIdTipo = (tipo, callback) => {
 
     db.query(`SELECT id_tipo FROM equipo_tipo WHERE tipo='${tipo}'`, function (err, result, fields) {
+        if (err) {
+            callback(err, null);
+        } else {
+
+            callback(null, result);
+        }
+    })
+
+}
+
+
+funcion.controllerDepartamentos = (callback) => {
+
+    dbA.query(`SELECT * FROM departamentos`, function (err, result, fields) {
+        if (err) {
+            callback(err, null);
+        } else {
+
+            callback(null, result);
+        }
+    })
+
+}
+
+funcion.controllerPruebas = (callback) => {
+
+    db.query(`SELECT * FROM equipo_pruebas`, function (err, result, fields) {
         if (err) {
             callback(err, null);
         } else {

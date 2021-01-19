@@ -97,7 +97,7 @@ controller.login = (req, res) => {
                                             data: loginId, data2: result
                                         });
                                     });
-                                }else if (loginId == 'laboratorio') {
+                                } else if (loginId == 'laboratorio') {
                                     funcionE.empleadosAccessAll(2, '>=', (err, result) => {
 
                                         res.render('login.ejs', {
@@ -127,8 +127,8 @@ controller.crear_equipo_POST = (req, res) => {
                             funcion.controllerMAXTR((err, result7) => {
                                 if (err) throw err;
 
-                           
-                                const next= result7[0].max_value+1;
+
+                                const next = result7[0].max_value + 1;
 
                                 res.render('crear_equipo.ejs', {
                                     data: result1, data2: result2, data3: result3, data4: numeroEmpleado, data5: result4, data6: result5, data7: result6, next
@@ -276,7 +276,7 @@ controller.gages_GET = (req, res) => {
 
 controller.equipo_GET = (req, res) => {
 
-    funcion.controllerTablaEquipo('!=','Baja', (err, result) => {
+    funcion.controllerTablaEquipo('!=', 'Baja', (err, result) => {
         if (err) throw err;
 
 
@@ -289,7 +289,7 @@ controller.equipo_GET = (req, res) => {
 
 controller.bajas_POST = (req, res) => {
 
-    funcion.controllerTablaEquipo('!=','Activo', (err, result) => {
+    funcion.controllerTablaEquipo('!=', 'Activo', (err, result) => {
         if (err) throw err;
 
 
@@ -307,7 +307,7 @@ controller.activar_POST = (req, res) => {
         if (err) throw err;
 
 
-        funcion.controllerTablaEquipo('!=','Activo', (err, result) => {
+        funcion.controllerTablaEquipo('!=', 'Activo', (err, result) => {
             if (err) throw err;
 
 
@@ -367,6 +367,58 @@ controller.verificacion_POST = (req, res) => {
                 data: result, data2: empleado, data3: result2
             });
 
+        });
+    });
+};
+
+
+controller.laboratorio_POST = (req, res) => {
+    numempleado = req.body.user
+
+    funcionE.empleadosNombre(numempleado, (err, result2) => {
+        if (err) throw err;
+
+        empleado = numempleado + " - " + result2
+
+        funcion.controllerTablaBitacora((err, result) => {
+            if (err) throw err;
+
+            res.render('bitacora_tabla.ejs', {
+                data: result, data2: empleado, data3: result2, data3: numempleado
+            });
+
+        });
+    });
+};
+
+
+controller.guardar_entrega_POST = (req, res) => {
+    numempleado = req.body.user
+
+    id= req.body.id
+    emp_entrega = req.body.emp_entrega
+    fecha = req.body.fecha
+    resultado = req.body.resultado
+    comentario = req.body.comentario
+
+    funcion.controllerUpdateEntrega(id,emp_entrega, fecha, resultado, comentario, (err, result2) => {
+        if (err) throw err;
+
+        funcionE.empleadosNombre(numempleado, (err, result2) => {
+            if (err) throw err;
+
+            empleado = numempleado + " - " + result2
+
+            funcion.controllerTablaBitacora((err, result) => {
+                if (err) throw err;
+
+
+                
+                res.render('bitacora_tabla.ejs', {
+                    data: result, data2: empleado, data3: result2, data3: numempleado
+                });
+
+            });
         });
     });
 };
@@ -445,7 +497,7 @@ controller.guardar_verificacion_POST = (req, res) => {
         funcion.controllerUpdateFechaVerificacion(equipo_id, columna, (err, result2) => {
             if (err) throw err;
 
-            funcion.controllerTablaEquipo('=','Activo', (err, resultequipo) => {
+            funcion.controllerTablaEquipo('=', 'Activo', (err, resultequipo) => {
                 if (err) throw err;
 
                 funcion.controllerTablaRyR((err, resultryr) => {
@@ -487,7 +539,7 @@ controller.modificar_POST = (req, res) => {
 
         empleadoN = req.body.user + ' - ' + result2
 
-        funcion.controllerTablaEquipo('=','Activo', (err, result) => {
+        funcion.controllerTablaEquipo('=', 'Activo', (err, result) => {
             if (err) throw err;
 
 
@@ -515,20 +567,20 @@ controller.guardar_eliminado_POST = (req, res) => {
     emp_id = req.body.user;
     equipo_id = req.body.equipo;
     motivo = req.body.motivo;
-    movimiento= req.body.movimiento
+    movimiento = req.body.movimiento
     let tipomov
-    if(movimiento=="eliminar"){
-        tipomov="Baja"
-    }else{tipomov="Detenido"}
+    if (movimiento == "eliminar") {
+        tipomov = "Baja"
+    } else { tipomov = "Detenido" }
 
 
-    funcion.controllerInsertBaja(equipo_id, emp_id, motivo,tipomov, (err, result2) => {
+    funcion.controllerInsertBaja(equipo_id, emp_id, motivo, tipomov, (err, result2) => {
         if (err) throw err;
 
         funcion.controllerUpdateStatus(equipo_id, tipomov, (err, result3) => {
             if (err) throw err;
 
-            funcion.controllerTablaEquipo('=','Activo', (err, result) => {
+            funcion.controllerTablaEquipo('=', 'Activo', (err, result) => {
                 if (err) throw err;
 
                 res.render('modificar.ejs', {
@@ -592,7 +644,7 @@ controller.guardar_modificacion_POST = (req, res) => {
 
             empleado = req.body.user
 
-            funcion.controllerTablaEquipo('=','Activo', (err, result) => {
+            funcion.controllerTablaEquipo('=', 'Activo', (err, result) => {
                 if (err) throw err;
 
 
@@ -836,40 +888,121 @@ controller.guardar_reubicar_POST = (req, res) => {
 };
 
 
-controller.laboratorio_POST = (req, res) => {
+
+controller.registrar_prueba_POST = (req, res) => {
 
     numeroEmpleado = req.body.user;
 
-    funcion.controllerAreas((err, result6) => {
+    funcion.controllerTipoEquipo((err, result5) => {
         if (err) throw err;
-        funcion.controllerTipoEquipo((err, result5) => {
+        funcion.controllerAllEquipo((err, result4) => {
             if (err) throw err;
-            funcion.controllerAllEquipo((err, result4) => {
+            funcionE.empleadosNombre(numeroEmpleado, (err, result3) => {
                 if (err) throw err;
-                funcionE.empleadosNombre(numeroEmpleado, (err, result3) => {
+
+                funcionE.empleadosAll((err, result8) => {
                     if (err) throw err;
-                    funcion.controllerPlataforma((err, result1) => {
+                    funcion.controllerDepartamentos((err, result9) => {
                         if (err) throw err;
-                        funcion.controllerUbicacion((err, result2) => {
+                        funcion.controllerPruebas((err, result10) => {
                             if (err) throw err;
-                            funcion.controllerMAXTR((err, result7) => {
-                                if (err) throw err;
 
-                           
-                                const next= result7[0].max_value+1;
 
-                                res.render('bitacora.ejs', {
-                                    data: result1, data2: result2, data3: result3, data4: numeroEmpleado, data5: result4, data6: result5, data7: result6, next
-                                });
 
+                            res.render('bitacora.ejs', {
+                                data3: result3, data4: numeroEmpleado,
+                                data5: result4, data6: result5, data8: result8, data9: result9, data10: result10, ventana: "false"
                             });
-
                         });
                     });
                 });
             });
         });
     });
+
+
+};
+
+
+
+controller.revisar_prueba_POST = (req, res) => {
+    id = req.body.id
+
+    funcion.controllerPrueba(id, (err, result) => {
+        if (err) throw err;
+
+
+        res.render('bitacora_revisar.ejs', {
+            data: result[0]
+        });
+    });
+
+};
+
+
+controller.entrega_prueba_POST = (req, res) => {
+    numeroempleado = req.body.user
+    id = req.body.id
+
+    funcion.controllerPrueba(id, (err, result) => {
+        if (err) throw err;
+        funcionE.empleadosNombre(numeroempleado, (err, result3) => {
+            if (err) throw err;
+
+            empleado = numeroempleado + " - " + result3
+            res.render('bitacora_entrega.ejs', {
+                data: result[0], data2: numeroempleado, empleado
+            });
+        });
+    });
+};
+
+
+controller.guardar_prueba_POST = (req, res) => {
+
+    numeroEmpleado = req.body.user;
+
+    recibe = req.body.emp_recibe
+    emp_req = req.body.req_empleado
+    fecha = req.body.fecha
+    departamento = req.body.departamento
+    equipo = req.body.equipo
+    prueba = req.body.prueba
+    cantidad = req.body.cantidad
+    comentario = req.body.comentario
+
+    funcion.controllerInsertPrueba(recibe, emp_req, fecha, departamento, equipo, prueba, cantidad, comentario, (err, result) => {
+        if (err) throw err;
+
+
+        funcion.controllerTipoEquipo((err, result5) => {
+            if (err) throw err;
+            funcion.controllerAllEquipo((err, result4) => {
+                if (err) throw err;
+                funcionE.empleadosNombre(numeroEmpleado, (err, result3) => {
+                    if (err) throw err;
+
+                    funcionE.empleadosAll((err, result8) => {
+                        if (err) throw err;
+                        funcion.controllerDepartamentos((err, result9) => {
+                            if (err) throw err;
+                            funcion.controllerPruebas((err, result10) => {
+                                if (err) throw err;
+
+
+
+                                res.render('bitacora.ejs', {
+                                    data3: result3, data4: numeroEmpleado,
+                                    data5: result4, data6: result5, data8: result8, data9: result9, data10: result10, ventana: "true"
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
+
 };
 
 module.exports = controller;

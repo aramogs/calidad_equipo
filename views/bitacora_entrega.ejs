@@ -1,0 +1,100 @@
+<% include ./static/header %>
+<% include ./static/sidebar %>
+<% include ./static/navbar %>
+
+<div class="col-md-6 col-lg-10-2">
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <br>
+            <h3 class="box-title">Prueba de Laboratorio</h3>
+        </div>
+        <br>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form action="/guardar_prueba" method="POST">
+            <div class="box-body">
+                <!------->
+                <!-- Date format yyyy-m-d -->
+                <%
+                     var d = new Date();
+                     var mm = d.getMonth() + 1;
+                     var dd = d.getDate();
+                     var yy = d.getFullYear();
+                     var myDateString = yy + '-' + mm + '-' + dd; //(US)
+                     %>
+                <!------->
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Id: </label> <label id="msg"> </label>
+                        <input type="text" class="form-control" id="id" value="<%=data.id%>"  name="id"
+                            onkeyup="this.value = this.value.toUpperCase();" readonly>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Entrega: </label> <label id="msg"> </label>
+                        <input type="text" class="form-control" id="emp_entrega" value="<%=empleado%>"  name="emp_entrega"
+                            onkeyup="this.value = this.value.toUpperCase();" readonly>
+                    </div>
+
+
+                    <div class="col-lg-6">
+                        <label for="inlineFormInputGroup">Fecha Entrega</label>
+                        <div class="input-group ">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><span class="fas fa-calendar"></span></div>
+                            </div>
+                            <input type="text" class="form-control" id="fecha" name="fecha"
+                                placeholder="yyyy-m-d" required autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="Titulo">Resultado:</label>
+                        <select class="form-control" name="resultado" id="resultado" required>
+                            <option value="" selected>Seleccionar</option>
+                            <option>Paso</option>
+                            <option>Fallo</option>
+                        </select>
+                    </div>
+
+                </div>
+                <!------->
+<!------->
+                <input type="number" class="form-control" id="user" value="<%= data2 %>" name="user" hidden>
+
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        <label for="Descripcion">Comentario:</label>
+                        <textarea type="text" class="form-control " rows="3" name="comentario" ></textarea>
+                    </div>
+                </div>
+
+                <div class="box-footer">
+                    <button id="btnguardar" type="submit" class="btn btn-primary"
+                        onclick="$('form').attr('action', '/guardar_entrega');">Guardar</button>
+                </div>
+
+        </form>
+    </div>
+    <!-- /.box -->
+
+    <% include ./static/footer %>
+</div>
+</body>
+
+</html>
+
+<script>
+    $('#fecha').datepicker({
+        format: "yyyy-m-d",
+        orientation: "bottom",
+        todayHighlight: true
+    });
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+</script>

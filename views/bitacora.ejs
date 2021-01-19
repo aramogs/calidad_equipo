@@ -9,10 +9,14 @@
             <br>
             <h3 class="box-title">Prueba de Laboratorio</h3>
         </div>
+
+        <div class="alert alert-success text-center mt-1" id='success-alert' role="alert" hidden>
+            <span>Prueba Guardada</span>
+          </div>
         <br>
         <!-- /.box-header -->
         <!-- form start -->
-        <form action="/guardar_equipo" method="POST">
+        <form action="/guardar_prueba" method="POST">
             <div class="box-body">
                 <!------->
                 <!-- Date format yyyy-m-d -->
@@ -27,14 +31,13 @@
                 <div class="row">
                     <div class="form-group col-lg-6">
                         <label for="Titulo">Recibe: </label> <label id="msg"> </label>
-                        <input type="text" class="form-control" id="id" value="" name="id"
-                            onkeyup="this.value = this.value.toUpperCase();" >
+                        <input type="text" class="form-control" id="emp_recibe" value="<%= data4 %> - <%= data3 %>"  name="emp_recibe"
+                            onkeyup="this.value = this.value.toUpperCase();" readonly>
                     </div>
 
                     <div class="form-group col-lg-6">
                         <label for="Titulo">Requisitor: </label> <label id="msg"> </label>
-                        <input type="text" class="form-control" id="id" value="" name="id"
-                            onkeyup="this.value = this.value.toUpperCase();" >
+                        <input type="text" class="form-control" id="req_empleado" value="" name="req_empleado" >
                     </div>
 
 
@@ -51,17 +54,17 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text"><span class="fas fa-calendar"></span></div>
                             </div>
-                            <input type="text" class="form-control" id="fecha_verificacion" name="fecha_verificacion"
+                            <input type="text" class="form-control" id="fecha" name="fecha"
                                 placeholder="yyyy-m-d" required autocomplete="off">
                         </div>
                     </div>
 
                     <div class="form-group col-lg-6">
                         <label for="Titulo">Departamento:</label>
-                        <select class="form-control" name="tipo" id="tipo" required>
+                        <select class="form-control" name="departamento" id="departamento" required>
                             <option value="" selected>Seleccionar</option>
-                            <% for (var i = 0; i < data6.length; i++) { %>
-                            <option><%= data6[i].tipo%></option>
+                            <% for (var i = 0; i < data9.length; i++) { %>
+                            <option><%= data9[i].departamento%></option>
                             <% } %>
                         </select>
                     </div>
@@ -75,7 +78,7 @@
 
                     <div class="form-group col-lg-6">
                         <label for="Titulo">Equipo:</label>
-                        <select class="form-control" name="tipo" id="tipo" required>
+                        <select class="form-control" name="equipo" id="equipo" required>
                             <option value="" selected>Seleccionar</option>
                             <% for (var i = 0; i < data6.length; i++) { %>
                             <option><%= data6[i].tipo%></option>
@@ -85,10 +88,10 @@
 
                     <div class="form-group col-lg-6">
                         <label for="Titulo">Tipo de Prueba:</label>
-                        <select class="form-control" name="tipo" id="tipo" required>
+                        <select class="form-control" name="prueba" id="prueba" required>
                             <option value="" selected>Seleccionar</option>
-                            <% for (var i = 0; i < data6.length; i++) { %>
-                            <option><%= data6[i].tipo%></option>
+                            <% for (var i = 0; i < data10.length; i++) { %>
+                            <option><%= data10[i].tipo%></option>
                             <% } %>
                         </select>
                     </div>
@@ -99,27 +102,25 @@
                 <div class="row">
                     <div class="form-group col-lg-6">
                         <label for="Titulo">Cantidad: </label> <label id="msg"> </label>
-                        <input type="number" class="form-control" id="id" value="TR-<%= next%>" name="id"
+                        <input type="number" class="form-control" id="cantidad" value="" name="cantidad"
                             onkeyup="this.value = this.value.toUpperCase();" >
                     </div>
-
-
-
-
                 </div>
 
-
-
-
-
-
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        <label for="Descripcion">Comentario:</label>
+                        <textarea type="text" class="form-control " rows="3" name="comentario" ></textarea>
+                    </div>
+                </div>
 
                 <!------->
+                <input type="number" class="form-control" id="user" value="<%= data4 %>" name="user" hidden>
 
                 <br>
                 <div class="box-footer">
                     <button id="btnguardar" type="submit" class="btn btn-primary"
-                        onclick="$('form').attr('action', '/guardar_equipo');">Guardar</button>
+                        onclick="$('form').attr('action', '/guardar_prueba');">Guardar</button>
                 </div>
         </form>
     </div>
@@ -132,67 +133,13 @@
 </html>
 
 <script>
-    $('#fecha_verificacion').datepicker({
-        format: "yyyy-m-d",
-        orientation: "bottom",
-        todayHighlight: true
-    });
-    $('#fecha_verificacionryr').datepicker({
+    $('#fecha').datepicker({
         format: "yyyy-m-d",
         orientation: "bottom",
         todayHighlight: true
     });
 
-    id.addEventListener("keyup", function (e) {
 
-        equipo = <%- JSON.stringify(data5) %>;
-        var msg = document.getElementById("msg");
-        var idin = document.getElementById("id");
-
-        var id = $('#id').val();
-
-
-        for (var i = 0; i < equipo.length; i++) {
-            if (id == equipo[i].equipo_id) {
-
-                $('#btnguardar').prop("disabled", true);
-                msg.innerHTML = ' Ya registrado';
-                idin.classList.remove('border-success');
-                msg.classList.remove('text-success');
-                msg.classList.add('text-danger');
-                idin.classList.add('border-danger');
-                break;
-
-            } else {
-
-                $('#btnguardar').prop("disabled", false);
-                msg.innerHTML = ' ';
-                idin.classList.remove('border-danger');
-                msg.classList.add('text-success');
-                idin.classList.add('border-success');
-            }
-        }
-
-    });
-
-    tipo.addEventListener("change", function (e) {
-
-
-        if ($('#tipo').val() == 'Gage de Inspeccion Final') {
-            $('#divplat').removeAttr('hidden');
-            $('#divdesc').removeAttr('hidden');
-            $("#desc").text("Numero de Parte");
-            $("#plataforma").attr("required", true);
-            
-        } else {
-            $("#divplat").attr("hidden", true);
-            $('#divdesc').removeAttr('hidden');
-            $("#desc").text("Descripcion");
-            $("#plataforma").removeAttr('required');
-        }
-
-        
-    });
 
 
     $('#ryr').click(function(){
@@ -210,7 +157,66 @@
 
 
 
-    ///////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////////////
+
+req_empleado.addEventListener("keyup", function (e) {
+    empleados = <%- JSON.stringify(data8) %>;
+    var escaneado = $('#req_empleado').val();
+    let gafete;
+    
+    if (escaneado.length == 9) {
+
+      if (escaneado[0] == 1 && escaneado[1] == 2 && escaneado[2] != 0) {
+        gafete = escaneado.substring(2, 8);
+        $('#user').val(gafete);
+
+      } else if (escaneado[0] == 1 && escaneado[1] == 2 && escaneado[2] == 0) {
+        gafete = escaneado.substring(3, 8);
+        $('#user').val(gafete);
+      }
+
+    } else {
+      gafete = escaneado
+      $('#user').val(gafete);
+    }
+
+    for (var i = 0; i < empleados.length; i++) {
+        if (gafete == empleados[i].emp_id) {
+
+            $('#req_empleado').val(empleados[i].emp_id + ' - '+ empleados[i].emp_nombre);
+            $('#req_empleado').prop("readonly", true);
+            $('#btnguardar').prop("disabled", false);
+            //document.getElementById("id_equipo").focus();
+            
+          break;
+
+        } else{
+
+           // $('#btnguardar').prop("disabled", true);
+        }
+      }
+
+
+  });
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+$( document ).ready(function() {
+    nuevo = <%- JSON.stringify(ventana) %>;
+  
+    if(nuevo=='true'){
+        $('#success-alert').prop("hidden", false);
+    $("#success-alert").show()
+          setTimeout(function () {
+            $("#success-alert").slideUp(1000);
+          }, 1000);
+        }
+});
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 
 
