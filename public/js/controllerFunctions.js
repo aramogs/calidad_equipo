@@ -381,7 +381,7 @@ funcion.controllerTablaRyR = (callback) => {
 
 
 funcion.controllerTablaBitacora= (callback) => {
-    db.query(`SELECT * FROM lab_bitacora`, function (err, result, fields) {
+    db.query(`SELECT * FROM lab_bitacora ORDER BY id DESC`, function (err, result, fields) {
 
         if (err) {
             callback(err, null);
