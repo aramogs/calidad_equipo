@@ -962,7 +962,6 @@ controller.entrega_prueba_POST = (req, res) => {
 controller.guardar_prueba_POST = (req, res) => {
 
     numeroEmpleado = req.body.user;
-
     recibe = req.body.emp_recibe
     emp_req = req.body.req_empleado
     fecha = req.body.fecha
@@ -971,6 +970,7 @@ controller.guardar_prueba_POST = (req, res) => {
     prueba = req.body.prueba
     cantidad = req.body.cantidad
     comentario = req.body.comentario
+
 
     funcion.controllerInsertPrueba(recibe, emp_req, fecha, departamento, equipo, prueba, cantidad, comentario, (err, result) => {
         if (err) throw err;

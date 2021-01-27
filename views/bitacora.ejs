@@ -169,17 +169,18 @@ req_empleado.addEventListener("keyup", function (e) {
 
       if (escaneado[0] == 1 && escaneado[1] == 2 && escaneado[2] != 0) {
         gafete = escaneado.substring(2, 8);
-        $('#user').val(gafete);
+        //$('#user').val(gafete);
 
       } else if (escaneado[0] == 1 && escaneado[1] == 2 && escaneado[2] == 0) {
         gafete = escaneado.substring(3, 8);
-        $('#user').val(gafete);
+        //$('#user').val(gafete);
       }
 
     } else {
       gafete = escaneado
-      $('#user').val(gafete);
+     // $('#user').val(gafete);
     }
+    
 
     for (var i = 0; i < empleados.length; i++) {
         if (gafete == empleados[i].emp_id) {
