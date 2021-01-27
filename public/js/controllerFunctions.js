@@ -170,6 +170,21 @@ funcion.controllerUpdateEquipo = (id_equipo, id_ubicacion, callback) => {
 
 }
 
+
+funcion.controllerUpdatePrueba = (id, cantidad,comentario, callback) => {
+    db.query(`UPDATE lab_bitacora SET 
+    cantidad = ${cantidad}, comentario_req="${comentario}"
+    WHERE id = ${id}`, function (err, result, fields) {
+        if (err) {
+            callback(err, null);
+        } else {
+
+            callback(null, result);
+        }
+    })
+
+}
+
 funcion.controllerUpdateEntrega = (id,emp_entrega, fecha, resultado, comentario, callback) => {
     db.query(`UPDATE lab_bitacora SET 
     status= "Entregado", emp_entrega='${emp_entrega}', fecha_entrega='${fecha}',resultado='${resultado}',comentario_entrega='${comentario}'
@@ -610,6 +625,19 @@ funcion.controllerSelectNotificar = (correo, callback) => {
 funcion.controllerDeleteNotificar = (correo, callback) => {
 
     db.query(`DELETE FROM equipo_notificar WHERE correo='${correo}'`, function (err, result, fields) {
+        if (err) {
+            callback(err, null);
+        } else {
+
+            callback(null, result);
+        }
+    })
+
+}
+
+funcion.controllerDeletePrueba = (id, callback) => {
+
+    db.query(`DELETE FROM lab_bitacora WHERE id=${id}`, function (err, result, fields) {
         if (err) {
             callback(err, null);
         } else {

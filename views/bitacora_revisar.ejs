@@ -5,9 +5,27 @@
 <div class="col-md-6 col-lg-10-2">
     <!-- general form elements -->
     <div class="box box-primary">
-        <div class="box-header with-border">
-            <br>
-            <h3 class="box-title">Prueba de Laboratorio</h3>
+        <div class="row col-lg-12">
+        
+   
+            <div class="row  col-lg-6">
+                <div class="box-header">
+                    <br>
+                    <h3 class="box-title">Prueba de Laboratorio</h3>
+        
+                    
+                </div>
+            </div>
+            <div class="row  col-lg-6">
+               
+                <form method="POST">
+                    <br>
+                    <button name="registar" type="submit" formaction="/delete_prueba"
+                        class="btn btn-danger text-center">Eliminar</button>
+                        <input type="number" class="form-control" id="id" value="<%=data.id%>" name="id" hidden>
+                        <input type="number" class="form-control" id="user" value="<%=numeroempleado%>" name="user" hidden>
+                </form>
+            </div>
         </div>
         <br>
         <!-- /.box-header -->
@@ -90,7 +108,7 @@
                     <div class="form-group col-lg-6">
                         <label for="Titulo">Cantidad: </label> <label id="msg"> </label>
                         <input type="number" class="form-control" id="cantidad" value="<%=data.cantidad%>" name="cantidad"
-                            onkeyup="this.value = this.value.toUpperCase();"  readonly>
+                            onkeyup="this.value = this.value.toUpperCase();" >
                     </div>
                 </div>
 
@@ -98,7 +116,7 @@
                 <div class="row">
                     <div class="form-group col-lg-12">
                         <label for="Descripcion">Comentario:</label>
-                        <textarea type="text" class="form-control " rows="3" name="comentario" value="" readonly><%=data.comentario_req%></textarea>
+                        <textarea type="text" class="form-control " rows="3" name="comentario_registro" value=""><%=data.comentario_req%></textarea>
                     </div>
                 </div>
 
@@ -139,6 +157,14 @@
                 <!------->
                 <input type="number" class="form-control" id="user" value="" name="user" hidden>
 
+                <br>
+                <input type="number" class="form-control" id="idPrueba" value="<%=data.id%>" name="idPrueba" hidden>
+                <input type="number" class="form-control" id="userid" value="<%=numeroempleado%>" name="userid" hidden>
+
+                <div class="box-footer">
+                    <button id="btnguardar" type="submit" class="btn btn-primary"
+                        onclick="$('form').attr('action', '/update_prueba');">Guardar</button>
+                </div>
                 <br>
 
         </form>

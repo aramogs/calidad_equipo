@@ -927,13 +927,14 @@ controller.registrar_prueba_POST = (req, res) => {
 
 controller.revisar_prueba_POST = (req, res) => {
     id = req.body.id
+    numeroempleado= req.body.user
 
     funcion.controllerPrueba(id, (err, result) => {
         if (err) throw err;
 
 
         res.render('bitacora_revisar.ejs', {
-            data: result[0]
+            data: result[0], numeroempleado
         });
     });
 
@@ -1004,5 +1005,57 @@ controller.guardar_prueba_POST = (req, res) => {
     });
 
 };
+
+controller.delete_prueba_POST = (req, res) => {
+numempleado = req.body.user
+id= req.body.id
+
+
+
+funcion.controllerDeletePrueba(id, (err, r) => {
+    if (err) throw err;
+    funcionE.empleadosNombre(numempleado, (err, result2) => {
+        if (err) throw err;
+
+        empleado = numempleado + " - " + result2
+
+        funcion.controllerTablaBitacora((err, result) => {
+            if (err) throw err;
+
+            res.render('bitacora_tabla.ejs', {
+                data: result, data2: empleado, data3: result2, data3: numempleado
+            });
+
+        });
+    });
+});
+};
+
+
+controller.update_prueba_POST = (req, res) => {
+    numempleado = req.body.userid
+    id= req.body.idPrueba
+    cantidad=req.body.cantidad
+    comentario= req.body.comentario_registro
+    
+    
+    funcion.controllerUpdatePrueba(id,cantidad, comentario, (err, r) => {
+        if (err) throw err;
+        funcionE.empleadosNombre(numempleado, (err, result2) => {
+            if (err) throw err;
+    
+            empleado = numempleado + " - " + result2
+    
+            funcion.controllerTablaBitacora((err, result) => {
+                if (err) throw err;
+    
+                res.render('bitacora_tabla.ejs', {
+                    data: result, data2: empleado, data3: result2, data3: numempleado
+                });
+    
+            });
+        });
+    });
+    };
 
 module.exports = controller;
