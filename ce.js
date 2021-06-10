@@ -17,6 +17,7 @@ const routes = require('./routes/routes');
 
 app.get(db);
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
 app.use(routes);
 
 app.set('port', process.env.PORT || 3004);

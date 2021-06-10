@@ -9,6 +9,7 @@ var schedule = require('node-schedule');
 const db = require('../db/conn');
 const dbE = require('../db/connEmpleados');
 const dbA = require('../db/connAreas');
+const dbP = require('../db/conn_promise');
 
 funcion.sendEmail = (dataEmail,tipo) => {
 
@@ -737,6 +738,59 @@ funcion.sendNotificacion = (esc, color, dmax, dmin, titulo, tipo) => {
                 }
             }
         }
+    })
+}
+
+
+funcion.getMovimientos = (desde, hasta, movimiento) => {
+    return new Promise((resolve, reject) => {
+        dbP(`
+        SELECT 
+            *
+        FROM
+            equipo_req
+        WHERE
+        accion='${movimiento}'
+        AND
+            DATE(fecha)
+        BETWEEN 
+            '${desde}'
+        AND     
+            '${hasta}'
+            `)
+            .then((result) => { resolve(result) })
+            .catch((error) => { reject(error) })
+    })
+}
+
+
+funcion.graficaReporte = (desde, hasta) => {
+
+    return new Promise((resolve, reject) => {
+        dbP(`
+        SELECT 
+            emp_aut,accion, COUNT(*) AS cantidad
+        FROM
+            equipo_req
+        WHERE
+
+            DATE(fecha)
+            
+        BETWEEN 
+            '${desde}'
+        AND     
+            '${hasta}'
+        GROUP BY
+
+        emp_aut, accion
+
+        ORDER BY emp_aut
+        DESC
+
+       
+            `)
+            .then((result) => { resolve(result)})
+            .catch((error) => { reject(error) })
     })
 }
 

@@ -990,8 +990,6 @@ controller.guardar_prueba_POST = (req, res) => {
                             funcion.controllerPruebas((err, result10) => {
                                 if (err) throw err;
 
-
-
                                 res.render('bitacora.ejs', {
                                     data3: result3, data4: numeroEmpleado,
                                     data5: result4, data6: result5, data8: result8, data9: result9, data10: result10, ventana: "true"
@@ -1057,5 +1055,51 @@ controller.update_prueba_POST = (req, res) => {
         });
     });
     };
+
+
+
+    
+controller.reportes_GET = (req, res) => {
+
+    res.render('reportes.ejs', {
+
+    });
+}
+
+
+
+
+controller.tablaEntradas_POST = (req, res) => {
+
+    let desde = req.body.desde
+    let hasta = req.body.hasta
+
+
+    funcion.getMovimientos(desde, hasta, "Entrada")
+        .then((result) => { res.json(result) })
+        .catch((err) => { console.error(err) })
+
+}
+
+controller.tablaSalidas_POST = (req, res) => {
+
+    let desde = req.body.desde
+    let hasta = req.body.hasta
+
+
+    funcion.getMovimientos(desde, hasta, "Salida")
+        .then((result) => { res.json(result) })
+        .catch((err) => { console.error(err) })
+
+}
+
+
+controller.reporteGrafico_POST = (req, res) => {
+    desde = req.body.desde
+    hasta = req.body.hasta
+    funcion.graficaReporte(desde, hasta)
+        .then(result => { res.json(result)  })
+        .catch(err => { console.error(err) })
+}
 
 module.exports = controller;

@@ -45,8 +45,15 @@ router.post('/entrega_prueba', routesController.entrega_prueba_POST);
 router.post('/guardar_entrega', routesController.guardar_entrega_POST);
 router.post('/delete_prueba', routesController.delete_prueba_POST);
 router.post('/update_prueba', routesController.update_prueba_POST);
+router.get('/reporte', routesController.reportes_GET);
+
+router.post('/tablaEntradas/', routesController.tablaEntradas_POST);
+router.post('/tablaSalidas/', routesController.tablaSalidas_POST);
+router.post('/reporteGrafico/', routesController.reporteGrafico_POST);
 
 router.get('*', (req, res) => {
   res.send('404 Page not found');
 });
+
 module.exports = router;
+
