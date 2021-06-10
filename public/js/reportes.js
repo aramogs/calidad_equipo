@@ -63,7 +63,7 @@ const desde = datepicker('#selectDesde', {
     overlayPlaceholder: 'Seleccionar Mes',
     customMonths: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
     disabled: true,
-    minDate: new Date(2021, 3, 1),
+    //minDate: new Date(2021, 3, 1),
     formatter: (input, date, instance) => {
 
         let mm = date.getMonth() + 1;
@@ -88,7 +88,7 @@ const hasta = datepicker('#selectHasta', {
     overlayPlaceholder: 'Seleccionar Mes',
     customMonths: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
     disabled: false,
-    minDate: new Date(2021, 3, 1),
+    //minDate: new Date(2021, 3, 1),
     formatter: (input, date, instance) => {
 
         let mm = date.getMonth() + 1;
