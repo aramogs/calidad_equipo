@@ -29,7 +29,8 @@
     <table id="myTable" class="table table-bordered table-striped">
         <thead class="thead-dark">
 
-            <th><span class="icoSidebar fas fa-minus"></span> Eliminar</th>
+             
+            <th><span class="icoSidebar fas fa-minus"></span> Baja</th>
             <th><span class="icoSidebar fas fa-pencil-alt"></span>  Detener</th>
             <th><span class="icoSidebar fas fa-pencil-alt"></span> Modificar</th>
 
@@ -42,6 +43,7 @@
                     <th><span class="icoSidebar fas fa-calendar-minus"></span> Ultima Verificacion</th>
                     <th><span class="icoSidebar fas fa-calendar-minus"></span> Periodo R&R</th>
                     <th><span class="icoSidebar fas fa-calendar-minus"></span> Ultimo Estudio MSA</th>
+                    <th><span class="icoSidebar fas fa-minus"></span> Eliminar</th>
                     <!-- <th><span class="icoSidebar fas fa-calendar-plus"></span> Proxima Verificacion</th>
                     <th><span class="icoSidebar fas fa-stopwatch"></span> Proxima Verificacion</th> -->
 
@@ -80,10 +82,11 @@
                 %>
 
             <tr class="table_roww">
+
                 <td class="text-center" >
                     <form method="POST">
                         <button name="equipoid" type="submit" formaction="/eliminar_equipo"
-                            class="btn btn-danger text-center">Eliminar</button>
+                            class="btn btn-danger text-center">Baja</button>
                         <input type="text" name="equipo_id2" value="<%=data[i].equipo_id%>" hidden>
                         <input type="text" name="user" id="user" value="<%= data2%>" hidden >
                         <input type="text" name="movimiento" id="movimiento" value="eliminar" hidden >
@@ -130,6 +133,17 @@
                         <div class="time-elapsed"></div>
                     <div id="timer" class="date_start_time" data-date-time="<%= proxima_verificacion  %>"></div>
                 </td> -->
+
+                <td class="text-center" >
+                    <form method="POST">
+                        <button name="equipoid" type="submit" formaction="/eliminar_equipo_def"
+                            class="btn btn-danger text-center">Eliminar</button>
+                        <input type="text" name="equipo_id2" value="<%=data[i].equipo_id%>" hidden>
+                        <input type="text" name="user" id="user" value="<%= data2%>" hidden >
+                        <input type="text" name="movimiento" id="movimiento" value="eliminar" hidden >
+                    </form>
+                   
+                </td>
 
             </tr>
             <% } %>

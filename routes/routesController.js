@@ -395,13 +395,13 @@ controller.laboratorio_POST = (req, res) => {
 controller.guardar_entrega_POST = (req, res) => {
     numempleado = req.body.user
 
-    id= req.body.id
+    id = req.body.id
     emp_entrega = req.body.emp_entrega
     fecha = req.body.fecha
     resultado = req.body.resultado
     comentario = req.body.comentario
 
-    funcion.controllerUpdateEntrega(id,emp_entrega, fecha, resultado, comentario, (err, result2) => {
+    funcion.controllerUpdateEntrega(id, emp_entrega, fecha, resultado, comentario, (err, result2) => {
         if (err) throw err;
 
         funcionE.empleadosNombre(numempleado, (err, result2) => {
@@ -413,7 +413,7 @@ controller.guardar_entrega_POST = (req, res) => {
                 if (err) throw err;
 
 
-                
+
                 res.render('bitacora_tabla.ejs', {
                     data: result, data2: empleado, data3: result2, data3: numempleado
                 });
@@ -559,6 +559,30 @@ controller.eliminar_equipo_POST = (req, res) => {
     res.render('eliminar_equipo.ejs', {
         data: equipo, data2: user, data3: movimiento
     });
+
+
+};
+
+
+
+controller.eliminar_equipo__def_POST = (req, res) => {
+    equipo = req.body.equipo_id2;
+    user = req.body.user;
+    movimiento = req.body.movimiento;
+
+
+    funcion.deleteEquipo(equipo, (err, result3) => {
+        if (err) throw err;
+        funcion.controllerTablaEquipo('=', 'Activo', (err, result) => {
+            if (err) throw err;
+
+
+            res.render('modificar.ejs', {
+                data: result, data2: user
+            });
+        });
+    });
+
 
 
 };
@@ -927,7 +951,7 @@ controller.registrar_prueba_POST = (req, res) => {
 
 controller.revisar_prueba_POST = (req, res) => {
     id = req.body.id
-    numeroempleado= req.body.user
+    numeroempleado = req.body.user
 
     funcion.controllerPrueba(id, (err, result) => {
         if (err) throw err;
@@ -1005,60 +1029,60 @@ controller.guardar_prueba_POST = (req, res) => {
 };
 
 controller.delete_prueba_POST = (req, res) => {
-numempleado = req.body.user
-id= req.body.id
+    numempleado = req.body.user
+    id = req.body.id
 
 
 
-funcion.controllerDeletePrueba(id, (err, r) => {
-    if (err) throw err;
-    funcionE.empleadosNombre(numempleado, (err, result2) => {
+    funcion.controllerDeletePrueba(id, (err, r) => {
         if (err) throw err;
-
-        empleado = numempleado + " - " + result2
-
-        funcion.controllerTablaBitacora((err, result) => {
+        funcionE.empleadosNombre(numempleado, (err, result2) => {
             if (err) throw err;
 
-            res.render('bitacora_tabla.ejs', {
-                data: result, data2: empleado, data3: result2, data3: numempleado
-            });
+            empleado = numempleado + " - " + result2
 
+            funcion.controllerTablaBitacora((err, result) => {
+                if (err) throw err;
+
+                res.render('bitacora_tabla.ejs', {
+                    data: result, data2: empleado, data3: result2, data3: numempleado
+                });
+
+            });
         });
     });
-});
 };
 
 
 controller.update_prueba_POST = (req, res) => {
     numempleado = req.body.userid
-    id= req.body.idPrueba
-    cantidad=req.body.cantidad
-    comentario= req.body.comentario_registro
-    
-    
-    funcion.controllerUpdatePrueba(id,cantidad, comentario, (err, r) => {
+    id = req.body.idPrueba
+    cantidad = req.body.cantidad
+    comentario = req.body.comentario_registro
+
+
+    funcion.controllerUpdatePrueba(id, cantidad, comentario, (err, r) => {
         if (err) throw err;
         funcionE.empleadosNombre(numempleado, (err, result2) => {
             if (err) throw err;
-    
+
             empleado = numempleado + " - " + result2
-    
+
             funcion.controllerTablaBitacora((err, result) => {
                 if (err) throw err;
-    
+
                 res.render('bitacora_tabla.ejs', {
                     data: result, data2: empleado, data3: result2, data3: numempleado
                 });
-    
+
             });
         });
     });
-    };
+};
 
 
 
-    
+
 controller.reportes_GET = (req, res) => {
 
     res.render('reportes.ejs', {
@@ -1098,7 +1122,7 @@ controller.reporteGrafico_POST = (req, res) => {
     desde = req.body.desde
     hasta = req.body.hasta
     funcion.graficaReporte(desde, hasta)
-        .then(result => { res.json(result)  })
+        .then(result => { res.json(result) })
         .catch(err => { console.error(err) })
 }
 

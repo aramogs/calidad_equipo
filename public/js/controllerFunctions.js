@@ -636,6 +636,21 @@ funcion.controllerDeleteNotificar = (correo, callback) => {
 
 }
 
+
+
+funcion.deleteEquipo = (equipo_id, callback) => {
+
+    db.query(`DELETE FROM equipo_info WHERE equipo_id='${equipo_id}'`, function (err, result, fields) {
+        if (err) {
+            callback(err, null);
+        } else {
+
+            callback(null, result);
+        }
+    })
+
+}
+
 funcion.controllerDeletePrueba = (id, callback) => {
 
     db.query(`DELETE FROM lab_bitacora WHERE id=${id}`, function (err, result, fields) {
