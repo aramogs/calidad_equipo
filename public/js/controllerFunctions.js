@@ -366,9 +366,25 @@ funcion.controllerTablaEquipo = (sign,status, callback) => {
     })
 }
 
+
+funcion.controllerTablaEquipoTodos = (sign,status, callback) => {
+    db.query(`SELECT * FROM equipo_info,  equipo_tipo
+    WHERE (equipo_info.equipo_tipo = equipo_tipo.id_tipo) AND equipo_ubicacion != 'Mezzanine' AND equipo_ubicacion NOT LIKE '%MZE%' AND equipo_tipo != '87'
+    AND status${sign}'${status}'
+    ORDER BY equipo_id`, function (err, result, fields) {
+
+        if (err) {
+            callback(err, null);
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
 funcion.controllerTablaVerificacion = (callback) => {
     db.query(`SELECT * FROM equipo_info,  equipo_tipo
-    WHERE (equipo_info.equipo_tipo = equipo_tipo.id_tipo) AND equipo_ubicacion != 'Mezzanine' AND equipo_ubicacion NOT LIKE '%MZE%'
+    WHERE (equipo_info.equipo_tipo = equipo_tipo.id_tipo) AND equipo_ubicacion != 'Mezzanine' AND equipo_ubicacion NOT LIKE '%MZE%' AND equipo_tipo != '87'
     AND status='Activo'
     ORDER BY equipo_id DESC`, function (err, result, fields) {
 

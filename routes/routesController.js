@@ -276,7 +276,7 @@ controller.gages_GET = (req, res) => {
 
 controller.equipo_GET = (req, res) => {
 
-    funcion.controllerTablaEquipo('!=', 'Baja', (err, result) => {
+    funcion.controllerTablaEquipoTodos('!=', 'Baja', (err, result) => {
         if (err) throw err;
 
 
